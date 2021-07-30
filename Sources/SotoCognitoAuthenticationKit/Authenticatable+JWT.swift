@@ -65,10 +65,10 @@ public extension CognitoAuthenticatable {
     ///     - on: Event loop to run on
     /// - returns:
     ///     An event loop future returning a structure with the username and UUID for the user.
-    func authenticate(accessToken: String, on eventLoopGroup: EventLoopGroup) -> EventLoopFuture<CognitoAccessToken> {
+    func authenticate<AccessToken: Codable>(accessToken: String, on eventLoopGroup: EventLoopGroup) -> EventLoopFuture<AccessToken> {
         return loadSigners(region: configuration.region, on: eventLoopGroup)
             .flatMapThrowing { signers in
-                let jwtPayload = try signers.verify(accessToken, as: VerifiedToken<AccessTokenVerifier, CognitoAccessToken>.self)
+                let jwtPayload = try signers.verify(accessToken, as: VerifiedToken<AccessTokenVerifier, AccessToken>.self)
                 guard jwtPayload.token.issuer == "https://cognito-idp.\(self.configuration.region.rawValue).amazonaws.com/\(self.configuration.userPoolId)" else {
                     throw SotoCognitoError.unauthorized(reason: "invalid token")
                 }
