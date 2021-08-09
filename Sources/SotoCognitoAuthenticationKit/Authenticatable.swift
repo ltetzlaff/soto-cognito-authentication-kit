@@ -25,6 +25,7 @@ public enum SotoCognitoError: Error {
     case failedToCreateContextData
     case unexpectedResult(reason: String?)
     case unauthorized(reason: String?)
+    case tokenExpired
     case invalidPublicKey
 }
 
