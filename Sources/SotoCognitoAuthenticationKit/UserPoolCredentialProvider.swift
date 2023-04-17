@@ -121,7 +121,7 @@ extension IdentityProviderFactory {
                         currentAuthentication = .refreshToken(refreshToken)
                         if let accessToken = response.accessToken {
                             authenticatable.authenticate(accessToken: accessToken, on: context.eventLoop)
-                                .whenComplete { result in
+                                .whenComplete { (result: Result<CognitoAccessToken, Error>) in
                                     switch result {
                                     case .success(let response):
                                         currentUserName = response.username

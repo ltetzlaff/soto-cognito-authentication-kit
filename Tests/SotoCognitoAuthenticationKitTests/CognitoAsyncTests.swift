@@ -221,7 +221,7 @@ final class CognitoAsyncTests: XCTestCase {
             guard case .authenticated(let authenticated) = response else { throw AWSCognitoTestError.notAuthenticated }
             guard let accessToken = authenticated.accessToken else { throw AWSCognitoTestError.missingToken }
 
-            let result = try await Self.authenticatable.authenticate(accessToken: accessToken, on: eventLoop)
+            let result: CognitoAccessToken = try await Self.authenticatable.authenticate(accessToken: accessToken, on: eventLoop)
             XCTAssertEqual(result.username, username)
         }
     }
@@ -268,7 +268,7 @@ final class CognitoAsyncTests: XCTestCase {
             guard case .authenticated(let authenticated) = response2 else { throw AWSCognitoTestError.notAuthenticated }
             guard let accessToken = authenticated.accessToken else { throw AWSCognitoTestError.missingToken }
 
-            _ = try await Self.authenticatable.authenticate(accessToken: accessToken, on: eventLoop)
+            let _: CognitoAccessToken = try await Self.authenticatable.authenticate(accessToken: accessToken, on: eventLoop)
         }
     }
 
@@ -346,7 +346,7 @@ final class CognitoAsyncTests: XCTestCase {
             guard case .authenticated(let authenticated) = response else { throw AWSCognitoTestError.notAuthenticated }
             guard let accessToken = authenticated.accessToken else { throw AWSCognitoTestError.missingToken }
 
-            let result = try await authenticatable.authenticate(accessToken: accessToken, on: eventLoop)
+            let result: CognitoAccessToken = try await authenticatable.authenticate(accessToken: accessToken, on: eventLoop)
             XCTAssertEqual(result.username, username)
         }
     }
