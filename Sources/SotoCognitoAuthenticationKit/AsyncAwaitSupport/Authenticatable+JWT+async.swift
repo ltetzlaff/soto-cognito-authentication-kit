@@ -56,13 +56,13 @@ public extension CognitoAuthenticatable {
     ///     - on: Event loop to run on
     /// - returns:
     ///     Structure with the username and UUID for the user.
-    func authenticate(
+    func authenticate<AccessToken: Codable>(
         accessToken: String,
         logger: Logger = AWSClient.loggingDisabled,
         on eventLoop: EventLoop
-    ) async throws -> CognitoAccessToken {
+    ) async throws -> AccessToken {
         let signers = try await loadSigners(region: configuration.region, logger: logger, on: eventLoop)
-        let jwtPayload = try signers.verify(accessToken, as: VerifiedToken<AccessTokenVerifier, CognitoAccessToken>.self)
+        let jwtPayload = try signers.verify(accessToken, as: VerifiedToken<AccessTokenVerifier, AccessToken>.self)
         guard jwtPayload.token.issuer == "https://cognito-idp.\(self.configuration.region.rawValue).amazonaws.com/\(self.configuration.userPoolId)" else {
             throw SotoCognitoError.unauthorized(reason: "invalid token")
         }
