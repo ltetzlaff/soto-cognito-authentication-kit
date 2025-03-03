@@ -30,6 +30,8 @@ public enum SotoCognitoError: Error {
     case unexpectedResult(reason: String?)
     /// Unauthorized to run this command
     case unauthorized(reason: String?)
+    /// Token has expired
+    case tokenExpired
     /// Public key returned by Soto is invalid please try again
     case invalidPublicKey
 }

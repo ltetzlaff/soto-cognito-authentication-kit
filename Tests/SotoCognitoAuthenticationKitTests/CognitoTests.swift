@@ -254,7 +254,7 @@ final class CognitoTests {
             guard case .authenticated(let authenticated) = response else { throw AWSCognitoTestError.notAuthenticated }
             guard let accessToken = authenticated.accessToken else { throw AWSCognitoTestError.missingToken }
 
-            let result = try await authenticatable.authenticate(accessToken: accessToken)
+            let result: CognitoAccessToken = try await authenticatable.authenticate(accessToken: accessToken)
             #expect(result.username == username)
         }
     }
@@ -297,7 +297,7 @@ final class CognitoTests {
             guard case .authenticated(let authenticated) = response2 else { throw AWSCognitoTestError.notAuthenticated }
             guard let accessToken = authenticated.accessToken else { throw AWSCognitoTestError.missingToken }
 
-            _ = try await authenticatable.authenticate(accessToken: accessToken)
+            let _: CognitoAccessToken = try await authenticatable.authenticate(accessToken: accessToken)
         }
     }
 

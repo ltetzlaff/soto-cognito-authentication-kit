@@ -144,7 +144,7 @@ actor UserPoolIdentityProvider: IdentityProvider {
         if let refreshToken = authResponse.refreshToken {
             self.currentAuthentication = .refreshToken(refreshToken)
             if let accessToken = authResponse.accessToken {
-                let accessAuthenticateResponse = try await authenticatable.authenticate(accessToken: accessToken, logger: logger)
+                let accessAuthenticateResponse: CognitoAccessToken = try await authenticatable.authenticate(accessToken: accessToken, logger: logger)
                 self.currentUserName = accessAuthenticateResponse.username
             }
         }

@@ -22,7 +22,7 @@ struct AccessTokenVerifier: JWTPayload {
     let tokenUse: String
 
     func verify(using algorithm: some JWTAlgorithm) async throws {
-        guard self.expirationTime > Date() else { throw SotoCognitoError.unauthorized(reason: "token expired") }
+        guard self.expirationTime > Date() else { throw SotoCognitoError.tokenExpired }
         guard self.tokenUse == "access" else { throw SotoCognitoError.unauthorized(reason: "invalid token") }
     }
 
@@ -41,7 +41,7 @@ struct IdTokenVerifier: JWTPayload {
     let tokenUse: String
 
     func verify(using algorithm: some JWTAlgorithm) async throws {
-        guard self.expirationTime > Date() else { throw SotoCognitoError.unauthorized(reason: "token expired") }
+        guard self.expirationTime > Date() else { throw SotoCognitoError.tokenExpired }
         guard self.tokenUse == "id" else { throw SotoCognitoError.unauthorized(reason: "invalid token") }
     }
 
